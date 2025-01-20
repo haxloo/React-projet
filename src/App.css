@@ -1,38 +1,78 @@
-.App {
+/* Style général */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff; /* Bleu clair */
+  margin: 0;
+  padding: 0;
+}
+
+/* Header */
+header {
+  background-color: #003366; /* Bleu foncé */
+  color: #ffcc00; /* Jaune */
+  padding: 20px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Footer */
+footer {
+  background-color: #003366; /* Bleu foncé */
+  color: #ffcc00; /* Jaune */
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Titres */
+h1 {
+  color: #003366; /* Bleu foncé */
+  text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h2 {
+  color: #003366; /* Bleu foncé */
 }
 
-.App-link {
-  color: #61dafb;
+/* Input et boutons */
+input, button {
+  margin: 10px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input {
+  border: 2px solid #003366; /* Bleu foncé */
 }
+
+button {
+  background-color: #ffcc00; /* Jaune */
+  color: #003366; /* Bleu foncé */
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #e6b800; /* Jaune foncé */
+}
+
+/* Liste des villes */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background-color: #ffcc00; /* Jaune */
+  color: #003366; /* Bleu foncé */
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
