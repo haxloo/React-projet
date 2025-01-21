@@ -6,14 +6,23 @@ const Liste = () => {
   const [city, setCity] = useState(''); // Ville entrée par l'utilisateur
   const [weatherList, setWeatherList] = useState([]); // Liste des villes avec météo
   const [search, setSearch] = useState(''); // Filtre de recherche
+  const [error, setError] = useState(null); // Message d'erreur
+  const [isLoading, setIsLoading] = useState(false); // État de chargement
 
   // Fonction pour ajouter une ville et récupérer ses données météo
   const handleAddCity = () => {
     if (city.trim() === '') {
-      alert('Veuillez entrer une ville valide.');
+      setError('Veuillez entrer une ville valide.');
       return;
     }
 
+    // Vérifie si la ville est déjà dans la liste
+    if (weatherList.some((item) => item.name.toLowerCase() === city.toLowerCase())) {
+      setError('Cette ville est déjà dans la liste.');
+      return;
+    }
+
+    setIsLoading(true); // Active le loader
     fetchWeather(city)
       .then((data) => {
         // Ajouter la météo de la ville à la liste
@@ -26,8 +35,15 @@ const Liste = () => {
           },
         ]);
         setCity(''); // Réinitialiser le champ de saisie
+        setError(null); // Réinitialiser les erreurs
       })
-      .catch((error) => console.error('Erreur lors de l’appel API :', error));
+      .catch((error) => {
+        setError('Ville introuvable ou erreur lors de l’appel API.');
+        console.error('Erreur lors de l’appel API :', error);
+      })
+      .finally(() => {
+        setIsLoading(false); // Désactive le loader
+      });
   };
 
   // Filtrage des villes
@@ -38,24 +54,34 @@ const Liste = () => {
   }, [search, weatherList]);
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div className="container" style={{ padding: '20px' }}>
       <h1>Liste des villes</h1>
-      
+
       {/* Ajouter une ville */}
-      <div>
+      <div className="mb-3">
         <input
           type="text"
+          className="form-control"
           placeholder="Entrez une ville"
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
-        <button onClick={handleAddCity}>Ajouter</button>
+        <button className="btn btn-primary mt-2" onClick={handleAddCity}>
+          Ajouter
+        </button>
       </div>
 
+      {/* Affichage d'un message d'erreur */}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      {/* Loader */}
+      {isLoading && <p>Chargement...</p>}
+
       {/* Champ de recherche */}
-      <div>
+      <div className="mb-3">
         <input
           type="text"
+          className="form-control"
           placeholder="Rechercher une ville"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -63,9 +89,9 @@ const Liste = () => {
       </div>
 
       {/* Affichage des villes */}
-      <ul>
+      <ul className="list-group">
         {filteredList.map((item, index) => (
-          <li key={index}>
+          <li key={index} className="list-group-item">
             <Link to={`/detail/${item.name}`}>
               {item.name} : {item.temp}°C ({item.condition})
             </Link>
@@ -77,4 +103,3 @@ const Liste = () => {
 };
 
 export default Liste;
-
